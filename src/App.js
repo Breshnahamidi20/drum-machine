@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; // Importing PropTypes
+import PropTypes from 'prop-types'; // Ensure prop-types is installed
 
 // Audio clips
 const sounds = [
@@ -14,6 +14,7 @@ const sounds = [
   { key: 'C', id: 'Closed HH', src: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3' },
 ];
 
+// DrumPad Component
 const DrumPad = ({ sound, handlePlay }) => (
   <button
     type="button" // Explicit button type
@@ -26,7 +27,7 @@ const DrumPad = ({ sound, handlePlay }) => (
   </button>
 );
 
-// Adding propTypes for validation
+// PropTypes validation
 DrumPad.propTypes = {
   sound: PropTypes.shape({
     key: PropTypes.string.isRequired,
@@ -36,8 +37,27 @@ DrumPad.propTypes = {
   handlePlay: PropTypes.func.isRequired,
 };
 
+// App Component
 const App = () => {
   const [display, setDisplay] = useState('');
+
+  // Play the audio and update the display
+  const handlePlay = (sound) => {
+    const audio = document.getElementById(sound.key);
+
+    // If the audio is already playing, reset and play it again
+    if (audio.currentTime > 0 && !audio.paused) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    // Play the audio and update display
+    audio.play().catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Audio playback error:', error);
+    });
+    setDisplay(sound.id); // Update display right after triggering sound
+  };
 
   // Handle the key press
   useEffect(() => {
@@ -50,21 +70,6 @@ const App = () => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
-
-  // Play the audio and update the display
-  const handlePlay = (sound) => {
-    const audio = document.getElementById(sound.key);
-
-    // If the audio is already playing, just reset and play it again
-    if (audio.currentTime > 0 && !audio.paused) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    // Play the audio and update display
-    audio.play().catch((error) => console.error('Audio playback error:', error));
-    setDisplay(sound.id); // Update display right after triggering sound
-  };
 
   return (
     <div id="drum-machine" className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
