@@ -9,7 +9,7 @@
 
 [Live Demo](https://drum-machine--neon-starburst-037542.netlify.app/)
 
-![Screenshot](./src/components/Screenshot%202024-09-06%20142126.png)
+![Screenshot](drum.png)
 
 ## Technologies Used 🛠️
 
