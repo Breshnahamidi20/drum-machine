@@ -15,10 +15,10 @@ const sounds = [
 
 const DrumPad = ({ sound, handlePlay}) => {
   return   (
-       <button
-      className="drum-pad bg-blue-500 text-white rounded-lg m-2 p-6 hover:bg-blue-700 focus:outline-none"
-      id={sound.id}
-      onClick={() => handlePlay(sound)}
+    <button
+         className="drum-pad bg-blue-500 text-white rounded-lg m-2 p-6 hover:bg-blue-700 focus:outline-none"
+         id={sound.id}
+         onClick={() => handlePlay(sound)}
     >
       {sound.key}
       <audio className="clip" id={sound.key} src={sound.src}></audio>
