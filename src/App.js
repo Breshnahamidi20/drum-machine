@@ -13,7 +13,7 @@ const sounds = [
   { key: 'C', id: 'Closed HH', src: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3' },
 ];
 
-const DrumPad =   ({ sound, handlePlay   }) => {
+const DrumPad = ({ sound, handlePlay}) => {
   return   (
        <button
       className="drum-pad bg-blue-500 text-white rounded-lg m-2 p-6 hover:bg-blue-700 focus:outline-none"
@@ -70,4 +70,4 @@ const App = () => {
   );
 };
 
-  export default App;
+export default App;
