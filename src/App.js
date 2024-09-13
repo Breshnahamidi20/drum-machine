@@ -23,6 +23,7 @@ const DrumPad = ({ sound, handlePlay }) => (
     onClick={() => handlePlay(sound)}
   >
     {sound.key}
+    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
     <audio className="clip" id={sound.key} src={sound.src} />
   </button>
 );
