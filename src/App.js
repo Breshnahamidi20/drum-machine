@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 
 // Audio clips
 const sounds = [
@@ -24,6 +25,16 @@ const DrumPad = ({ sound, handlePlay }) => {
       <audio className="clip" id={sound.key} src={sound.src}></audio>
     </button>
   );
+};
+
+// Adding propTypes for DrumPad
+DrumPad.propTypes = {
+  sound: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  }).isRequired,
+  handlePlay: PropTypes.func.isRequired,
 };
 
 const App = () => {
