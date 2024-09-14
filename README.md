@@ -7,7 +7,7 @@
 
 ## Demo 📸
 
-[Live Demo](https://drum-machine--neon-starburst-037542.netlify.app/)
+[Live Demo](    https://deploy-preview-1--coruscating-jalebi-6a511f.netlify.app)
 
 ![Screenshot](drum.png)
 
