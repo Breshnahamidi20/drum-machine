@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; // Ensure prop-types is installed
 
 // Audio clips
 const sounds = [
@@ -14,51 +13,21 @@ const sounds = [
   { key: 'C', id: 'Closed HH', src: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3' },
 ];
 
-// DrumPad Component
-const DrumPad = ({ sound, handlePlay }) => (
-  <button
-    type="button" // Explicit button type
-    className="drum-pad bg-blue-500 text-white rounded-lg m-2 p-6 hover:bg-blue-700 focus:outline-none"
-    id={sound.id}
-    onClick={() => handlePlay(sound)}
-  >
-    {sound.key}
-    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-    <audio className="clip" id={sound.key} src={sound.src} />
-  </button>
-);
-
-// PropTypes validation
-DrumPad.propTypes = {
-  sound: PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-  }).isRequired,
-  handlePlay: PropTypes.func.isRequired,
+const DrumPad = ({ sound, handlePlay }) => {
+  return (
+    <button
+      className="drum-pad bg-blue-500 text-white rounded-lg m-2 p-6 hover:bg-blue-700 focus:outline-none"
+      id={sound.id}
+      onClick={() => handlePlay(sound)}
+    >
+      {sound.key}
+      <audio className="clip" id={sound.key} src={sound.src}></audio>
+    </button>
+  );
 };
 
-// App Component
 const App = () => {
   const [display, setDisplay] = useState('');
-
-  // Play the audio and update the display
-  const handlePlay = (sound) => {
-    const audio = document.getElementById(sound.key);
-
-    // If the audio is already playing, reset and play it again
-    if (audio.currentTime > 0 && !audio.paused) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    // Play the audio and update display
-    audio.play().catch((error) => {
-      // eslint-disable-next-line no-console
-      console.error('Audio playback error:', error);
-    });
-    setDisplay(sound.id); // Update display right after triggering sound
-  };
 
   // Handle the key press
   useEffect(() => {
@@ -72,12 +41,25 @@ const App = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
+  // Play the audio and update the display
+  const handlePlay = (sound) => {
+    const audio = document.getElementById(sound.key);
+
+    // Reset audio only if it's playing
+    if (!audio.paused) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    // Play the audio and update display immediately
+    audio.play();
+    setDisplay(sound.id);  // Update display right after triggering sound
+  };
+
   return (
     <div id="drum-machine" className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg">
-        <div id="display" className="text-center mb-4 text-2xl font-bold text-gray-700">
-          {display}
-        </div>
+        <div id="display" className="text-center mb-4 text-2xl font-bold text-gray-700">{display}</div>
         <div className="grid grid-cols-3 gap-4">
           {sounds.map((sound) => (
             <DrumPad key={sound.key} sound={sound} handlePlay={handlePlay} />
